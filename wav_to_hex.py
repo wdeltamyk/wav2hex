@@ -1,7 +1,9 @@
 import wave
 import numpy as np
+import os
+import glob
 
-filename = "808CowBell64.wav"
+input_folder = "input"
 
 def process_waveform(waveform, max_height=16, max_width=32):
     # Resample the waveform to fit the max width
@@ -34,10 +36,22 @@ def wav_to_hex(filename, max_height=16, max_width=32):
     # Process the waveform to fit the restrictions
     processed_waveform = process_waveform(waveform, max_height, max_width)
 
-    # Convert the processed waveform data to hexadecimal
-    hex_representation = ' '.join(f'{value:02X}' for value in processed_waveform)
+    # Convert the processed waveform data to hexadecimal and extract only the second digit of each byte
+    hex_representation = ''.join(f'{value:02X}'[1] for value in processed_waveform)
 
     return hex_representation
 
-hex_representation = wav_to_hex(filename)
-print(hex_representation)
+# Get the path to the "input" folder
+input_path = os.path.join(os.path.dirname(__file__), input_folder)
+
+# Find all .wav files in the "input" folder
+wav_files = glob.glob(os.path.join(input_path, '*.wav'))
+
+# Process each .wav file
+for wav_file in wav_files:
+    hex_representation = wav_to_hex(wav_file)
+    print(f'Hex representation for {os.path.basename(wav_file)}:\n{hex_representation}\n')
+
+# Wait for user input before closing
+input("Press enter key to exit...")
+exit

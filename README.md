@@ -1,2 +1,8 @@
 # wav2hex
- Simple Wav to 32x16 Hex program for Chiptune based music
+ Simple Wav sample to 32x16 Hex program for Chiptune based music (specifically hUGETracker), can easily be modified to have a larger waveform grid although I wouldn't recommend going past 32x32 as you'll then need to adjust the samples bitrate and update the program accordingly.
+# Limitations
+ The sample needs to be 8bit mono, it will just crash otherwise. The shorter the sample the better, I wouldn't go over 4 seconds as a max, but 1 second or less will net you the best results, there's a lot of sacrificing that needs to be done to have the sample fit a 32x16 wavetable grid
+# Requirements
+ Requires Numpy, glob and uses the python "Wave" and OS function. Numpy can be installed easily by running "pip -U numpy" in a terminal or console.
+# Use
+ throw any wav into the included "input" folder, a test file of an 808 cowbell sample exists in there, but this will run on any wav file in the folder, and return all results. Then invoke the script, which will return the hex output with spaces removed and wait for user input before closing. The hex output ignores the first digit of the string, as this is always a return to 0, where hUGETracker only needs the deviations from 0, except where a leading 0 is followed by another 0, the second 0 is still captured. To return the full hex; change "hex_representation = ''.join(f'{value:02X}'[1] for value in processed_waveform)" to "hex_representation = ''.join(f'{value:02X}' for value in processed_waveform)"
