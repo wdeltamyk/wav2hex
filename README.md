@@ -1,8 +1,67 @@
 # wav2hex
- Simple Wav sample to 32x16 Hex program for Chiptune based music (specifically hUGETracker), can easily be modified to have a larger waveform grid although I wouldn't recommend going past 32x32 as you'll then need to adjust the samples bitrate and update the program accordingly.
-# Limitations
- The sample needs to be 8bit mono, it will just crash otherwise. The shorter the sample the better, I wouldn't go over 4 seconds as a max, but 1 second or less will net you the best results, there's a lot of sacrificing that needs to be done to have the sample fit a 32x16 wavetable grid
-# Requirements
- Requires Numpy, glob and uses the python "Wave" and OS function. Numpy can be installed easily by running "pip -U numpy" in a terminal or console.
-# Use
- throw any wav into the included "input" folder, a test file of an 808 cowbell sample exists in there, but this will run on any wav file in the folder, and return all results. Then invoke the script, which will return the hex output with spaces removed and wait for user input before closing. The hex output ignores the first digit of the string, as this is always a return to 0, where hUGETracker only needs the deviations from 0, except where a leading 0 is followed by another 0, the second 0 is still captured. To return the full hex; change "hex_representation = ''.join(f'{value:02X}'[1] for value in processed_waveform)" to "hex_representation = ''.join(f'{value:02X}' for value in processed_waveform)"
+
+## Overview
+wav2hex is a specialized utility designed for converting WAV audio samples into hexadecimal format, optimized for chiptune-based music production, particularly for use with hUGETracker. This tool facilitates the integration of custom waveforms into retro-style music compositions.
+
+## Features
+- Converts 8-bit mono WAV files to 32x16 hexadecimal waveform grids
+- Customizable grid size (with considerations for sample bitrate)
+- Optimized for short samples (1-4 seconds)
+- Outputs hex data formatted for direct use in chiptune trackers
+
+## Technical Specifications
+
+### Input Requirements
+- File Format: 8-bit mono WAV
+- Recommended Duration: ≤ 4 seconds (optimal: ≤ 1 second)
+- Input Directory: Place WAV files in the included "input" folder
+
+### Output
+- 32x16 hexadecimal waveform grid
+- Formatted hex string with leading zeros omitted (except where necessary)
+
+### Customization
+The program can be modified to support larger waveform grids (up to 32x32), with corresponding adjustments to sample bitrate processing.
+
+## Dependencies
+- Python 3.x
+- NumPy
+- Standard Python libraries: wave, os, glob
+
+### Installation
+Install NumPy using pip:
+```
+pip install -U numpy
+```
+
+## Usage
+1. Place WAV file(s) in the "input" folder
+2. Run the script
+3. Hexadecimal output will be displayed, formatted for chiptune tracker use
+4. Press any key to close the program after reviewing the output
+
+## Advanced Configuration
+To obtain the full hexadecimal representation, including leading zeros, modify the following line in the script:
+
+From:
+```python
+hex_representation = ''.join(f'{value:02X}'[1] for value in processed_waveform)
+```
+To:
+```python
+hex_representation = ''.join(f'{value:02X}' for value in processed_waveform)
+```
+
+## Limitations
+- Processes only 8-bit mono WAV files
+- Optimized for short samples (≤ 4 seconds)
+- Fixed 32x16 waveform grid in default configuration
+
+## Future Development
+- Support for additional input formats
+- Dynamic grid size adjustment based on input parameters
+- Integration with popular chiptune composition software
+
+---
+
+For issues, feature requests, or contributions, please open an issue or pull request on the GitHub repository.
